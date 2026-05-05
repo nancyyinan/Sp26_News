@@ -1,0 +1,3144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My News Diet, Compared — From Headlines to Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #f7f4ee;
+        --ivory-2: #f0ebe1;
+        --charcoal: #1e1e1e;
+        --charcoal-mid: #3a3a3a;
+        --charcoal-light: #6b6b6b;
+        --navy: #1a2b4a;
+        --navy-mid: #2c4270;
+        --navy-light: #e8edf5;
+        --rust: #9b3f2b;
+        --rust-mid: #c25b42;
+        --rust-light: #f5e8e4;
+        --yellow: #f5e67a;
+        --yellow-light: #fdfbe8;
+        --gray-line: #d8d3cb;
+        --gray-subtle: #eceae4;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        background: var(--ivory);
+        color: var(--charcoal);
+        font-family: "DM Sans", sans-serif;
+        font-weight: 400;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        background: rgba(247, 244, 238, 0.96);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--gray-line);
+        padding: 0 2rem;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-brand {
+        font-family: "Playfair Display", serif;
+        font-size: 0.9rem;
+        font-style: italic;
+        color: var(--navy);
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.4rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--charcoal-light);
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--navy);
+      }
+      @media (max-width: 780px) {
+        .nav-links {
+          display: none;
+        }
+      }
+
+      #hero {
+        padding-top: 56px;
+        min-height: 100vh;
+        background: var(--ivory);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+      }
+      .hero-bg-lines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .hero-bg-lines::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 100%;
+        background: var(--gray-line);
+      }
+      .floating-headlines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .fh {
+        position: absolute;
+        font-family: "Playfair Display", serif;
+        font-size: 0.7rem;
+        font-style: italic;
+        color: var(--charcoal-light);
+        opacity: 0.2;
+        white-space: nowrap;
+        animation: drift linear infinite;
+      }
+      @keyframes drift {
+        0% {
+          transform: translateY(0);
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 0.08;
+        }
+        100% {
+          transform: translateY(-18px);
+          opacity: 0.2;
+        }
+      }
+      .hero-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 6rem 2rem 4rem;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-kicker {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--rust);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .hero-kicker::before {
+        content: "";
+        display: block;
+        width: 2rem;
+        height: 1px;
+        background: var(--rust);
+      }
+      h1.hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 700;
+        line-height: 1.05;
+        color: var(--charcoal);
+        margin-bottom: 0.3rem;
+        letter-spacing: -0.02em;
+      }
+      h1.hero-title span {
+        color: var(--navy);
+      }
+      h2.hero-subtitle {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+        font-weight: 400;
+        font-style: italic;
+        color: var(--charcoal-light);
+        margin-bottom: 2.5rem;
+      }
+      .hero-desc {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: var(--charcoal-mid);
+        max-width: 540px;
+        border-left: 2px solid var(--navy);
+        padding-left: 1.25rem;
+        margin-bottom: 3.5rem;
+      }
+      .stat-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--gray-line);
+        border: 1px solid var(--gray-line);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      @media (max-width: 600px) {
+        .stat-cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .stat-card {
+        background: var(--ivory);
+        padding: 1.5rem 1.25rem;
+        position: relative;
+        transition: background 0.2s;
+      }
+      .stat-card:hover {
+        background: var(--yellow-light);
+      }
+      .stat-card .stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        font-weight: 700;
+        color: var(--navy);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+        display: block;
+      }
+      .stat-card .stat-label {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--charcoal-light);
+        line-height: 1.4;
+      }
+      .stat-card .stat-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--navy);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+      }
+      .stat-card:hover .stat-bar {
+        transform: scaleX(1);
+      }
+
+      section {
+        padding: 5rem 2rem;
+      }
+      .section-inner {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+      .section-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--rust);
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .section-label::before {
+        content: "";
+        width: 1.5rem;
+        height: 1px;
+        background: var(--rust);
+      }
+      h2.section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.6rem, 4vw, 2.6rem);
+        font-weight: 700;
+        color: var(--charcoal);
+        line-height: 1.15;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.01em;
+      }
+      .section-body {
+        font-size: 1.05rem;
+        line-height: 1.85;
+        color: var(--charcoal-mid);
+        max-width: 680px;
+      }
+
+      #snapshot {
+        background: var(--navy);
+      }
+      #snapshot .section-label {
+        color: var(--yellow);
+      }
+      #snapshot .section-label::before {
+        background: var(--yellow);
+      }
+      #snapshot h2.section-title {
+        color: #fff;
+      }
+      #snapshot .section-body {
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      .tooltip {
+        position: fixed;
+        z-index: 9999;
+        background: var(--charcoal);
+        color: #fff;
+        font-size: 0.8rem;
+        padding: 0.75rem 1rem;
+        border-radius: 3px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.15s;
+        max-width: 280px;
+        line-height: 1.55;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+      }
+      .tooltip.visible {
+        opacity: 1;
+      }
+      .tooltip strong {
+        color: var(--yellow);
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      .fade-in {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .d1 {
+        transition-delay: 0.1s;
+      }
+      .d2 {
+        transition-delay: 0.2s;
+      }
+      .d3 {
+        transition-delay: 0.3s;
+      }
+      .d4 {
+        transition-delay: 0.4s;
+      }
+
+      /* ── DONUT ─────────────────────────────── */
+      #donut {
+        background: var(--ivory-2);
+      }
+      .donut-layout {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 3rem;
+        align-items: center;
+        margin-top: 2.5rem;
+      }
+      @media (max-width: 700px) {
+        .donut-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      .donut-wrap {
+        position: relative;
+        width: 280px;
+        height: 280px;
+        margin: 0 auto;
+      }
+      .donut-wrap svg {
+        width: 100%;
+        height: 100%;
+      }
+      .donut-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        pointer-events: none;
+      }
+      .donut-center-num {
+        font-family: "Playfair Display", serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--navy);
+        line-height: 1;
+      }
+      .donut-center-label {
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--charcoal-light);
+        margin-top: 0.2rem;
+      }
+      .donut-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .d-leg {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        cursor: pointer;
+        padding: 0.35rem 0.5rem;
+        border-radius: 2px;
+        transition: background 0.15s;
+      }
+      .d-leg:hover,
+      .d-leg.active {
+        background: var(--yellow-light);
+      }
+      .d-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .d-name {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--charcoal);
+      }
+      .d-pct {
+        font-size: 0.75rem;
+        color: var(--charcoal-light);
+      }
+      .donut-desc {
+        margin-top: 1.25rem;
+        font-size: 0.88rem;
+        font-style: italic;
+        color: var(--charcoal-mid);
+        line-height: 1.65;
+        min-height: 4rem;
+        border-left: 2px solid var(--yellow);
+        padding-left: 0.85rem;
+        transition: opacity 0.25s;
+      }
+
+      /* ── SPECTRUM ──────────────────────────── */
+      #spectrum {
+        background: var(--ivory);
+        padding: 3.5rem 2rem;
+      }
+      .spectrum-wrap {
+        margin-top: 1.5rem;
+        max-width: 680px;
+      }
+      .spectrum-ends {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        margin-bottom: 2.5rem;
+      }
+      .spectrum-ends span:first-child {
+        color: var(--navy);
+      }
+      .spectrum-ends span:last-child {
+        color: var(--rust);
+      }
+      .spectrum-track {
+        position: relative;
+        height: 7px;
+        background: linear-gradient(
+          to right,
+          var(--navy) 0%,
+          var(--gray-subtle) 50%,
+          var(--rust) 100%
+        );
+        border-radius: 4px;
+        margin-bottom: 5rem; /* was 2.5rem */
+      }
+      .sp-marker {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .sp-dot {
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 3px solid var(--ivory);
+        box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.18);
+      }
+      .sp-label {
+        position: absolute;
+        top: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        text-align: center;
+        line-height: 1.5; /* added */
+      }
+      .sp-label-main {
+        font-size: 0.73rem;
+        font-weight: 600;
+        line-height: 1.3;
+        display: block; /* added — forces stacking so sub sits cleanly below */
+      }
+
+      .sp-label-sub {
+        font-size: 0.64rem;
+        color: var(--charcoal-light);
+        display: block; /* added — same reason */
+      }
+
+      .spectrum-caption {
+        font-size: 0.82rem;
+        color: var(--charcoal-light);
+        font-style: italic;
+        line-height: 1.65;
+        margin-top: 1.5rem; /* added explicit top margin */
+        padding-top: 0.5rem; /* added breathing room above the text */
+        border-top: 1px solid var(--gray-line); /* optional: subtle separator */
+      }
+
+      /* ── BAR CHARTS ────────────────────────── */
+      #chart1 {
+        background: var(--ivory);
+      }
+      .chart-box {
+        background: #fdfcf9;
+        border: 1px solid var(--gray-line);
+        padding: 2.5rem;
+        border-radius: 2px;
+        margin-top: 2rem;
+      }
+      .chart-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--charcoal);
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--gray-line);
+      }
+      .bar-group {
+        margin-bottom: 2.2rem;
+      }
+      .bar-metric {
+        font-size: 0.77rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--charcoal);
+        margin-bottom: 0.75rem;
+      }
+      .bar-pair {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .bar-row-label {
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--charcoal-light);
+        margin-bottom: 2px;
+        margin-top: 8px;
+      }
+      .bar-track {
+        height: 36px;
+        background: var(--gray-subtle);
+        position: relative;
+        cursor: pointer;
+        border-radius: 1px;
+        overflow: visible;
+      }
+      .bar-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        border-radius: 1px;
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 8px;
+      }
+      .bf-me {
+        background: var(--navy);
+      }
+      .bf-sec {
+        background: var(--rust);
+        opacity: 0.85;
+      }
+      .bar-fill-pct {
+        font-size: 0.74rem;
+        font-weight: 700;
+        color: #fff;
+        white-space: nowrap;
+      }
+      .chart-caption {
+        font-size: 0.82rem;
+        color: var(--charcoal-light);
+        line-height: 1.6;
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--gray-line);
+        font-style: italic;
+      }
+      #chart2 {
+        background: var(--gray-subtle);
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      @media (max-width: 640px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pub-col {
+        background: #fdfcf9;
+        border: 1px solid var(--gray-line);
+        padding: 2rem;
+        border-radius: 2px;
+      }
+      .pub-col-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--charcoal);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--gray-line);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+      }
+      .dm {
+        background: var(--navy);
+      }
+      .ds {
+        background: var(--rust);
+      }
+      .pbr {
+        margin-bottom: 1rem;
+      }
+      .pbm {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.78rem;
+        margin-bottom: 4px;
+      }
+      .pbn {
+        font-weight: 500;
+        color: var(--charcoal);
+      }
+      .pbs {
+        color: var(--charcoal-light);
+        font-size: 0.72rem;
+      }
+      .pbt {
+        height: 8px;
+        background: var(--gray-subtle);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .pbf {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .pbfm {
+        background: var(--navy);
+      }
+      .pbfs {
+        background: var(--rust);
+        opacity: 0.85;
+      }
+      .pub-note {
+        font-size: 0.8rem;
+        font-style: italic;
+        color: var(--charcoal-light);
+        line-height: 1.6;
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--gray-line);
+      }
+
+      /* ── TIMELINE ──────────────────────────── */
+      #timeline {
+        background: var(--navy);
+        padding: 5rem 2rem;
+      }
+      #timeline .section-label {
+        color: var(--yellow);
+      }
+      #timeline .section-label::before {
+        background: var(--yellow);
+      }
+      #timeline h2.section-title {
+        color: #fff;
+      }
+      .tl-layout {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 2.5rem;
+        align-items: start;
+        margin-top: 2.5rem;
+      }
+      @media (max-width: 720px) {
+        .tl-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      .tl-months {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .tl-block {
+        flex: 1;
+        min-width: 70px;
+        cursor: pointer;
+      }
+      .tl-month-name {
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 0.45rem;
+        text-align: center;
+      }
+      .tl-outer {
+        background: rgba(255, 255, 255, 0.09);
+        border-radius: 2px;
+        height: 150px;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        transition: background 0.2s;
+        border: 1.5px solid transparent;
+      }
+      .tl-outer:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .tl-outer.active {
+        background: rgba(245, 230, 122, 0.1);
+        border-color: var(--yellow);
+      }
+      .tl-fill {
+        width: 100%;
+        border-radius: 2px 2px 0 0;
+        background: rgba(255, 255, 255, 0.3);
+        transition:
+          height 1s cubic-bezier(0.4, 0, 0.2, 1),
+          background 0.2s;
+      }
+      .tl-outer.active .tl-fill {
+        background: var(--yellow);
+      }
+      .tl-count {
+        text-align: center;
+        font-family: "Playfair Display", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 0.35rem;
+        transition: color 0.2s;
+      }
+      .tl-block.active .tl-count {
+        color: var(--yellow);
+      }
+      .tl-panel {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 2px;
+        padding: 1.75rem;
+        min-height: 180px;
+      }
+      .tl-panel-mo {
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--yellow);
+        margin-bottom: 0.4rem;
+      }
+      .tl-panel-n {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.65rem;
+      }
+      .tl-panel-n span {
+        font-size: 0.95rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.45);
+        font-family: "DM Sans", sans-serif;
+      }
+      .tl-panel-t {
+        font-size: 0.9rem;
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .tl-hint {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.3);
+        margin-top: 0.85rem;
+        font-style: italic;
+      }
+
+      /* ── CONSTELLATION ─────────────────────── */
+      #constellation {
+        background: var(--ivory);
+        padding: 5rem 2rem;
+      }
+      .const-layout {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 3rem;
+        align-items: start;
+        margin-top: 2rem;
+      }
+      @media (max-width: 800px) {
+        .const-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      .const-svg-wrap {
+        width: 100%;
+        max-width: 520px;
+      }
+      .const-svg-wrap svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+      .cn {
+        cursor: pointer;
+      }
+      .cn circle {
+        transition:
+          r 0.2s,
+          fill-opacity 0.2s,
+          filter 0.2s;
+      }
+      .cn:hover circle,
+      .cn.active circle {
+        filter: drop-shadow(0 0 7px rgba(26, 43, 74, 0.4));
+      }
+      .cn-line {
+        stroke: var(--gray-line);
+        stroke-width: 1;
+        fill: none;
+      }
+      .cn-line.strong {
+        stroke: rgba(26, 43, 74, 0.18);
+        stroke-width: 1.5;
+      }
+      .const-panel {
+        background: #fdfcf9;
+        border: 1px solid var(--gray-line);
+        border-radius: 2px;
+        padding: 1.75rem;
+        position: sticky;
+        top: 80px;
+      }
+      .const-panel-tag {
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--rust);
+        margin-bottom: 0.4rem;
+      }
+      .const-panel-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--charcoal);
+        margin-bottom: 0.85rem;
+        line-height: 1.25;
+      }
+      .const-panel-text {
+        font-family: "Source Serif 4", serif;
+        font-size: 0.93rem;
+        line-height: 1.82;
+        color: var(--charcoal-mid);
+      }
+      .const-badge {
+        margin-top: 0.75rem;
+        display: inline-block;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        padding: 0.18rem 0.5rem;
+        border-radius: 2px;
+      }
+      .badge-strong {
+        background: var(--navy-light);
+        color: var(--navy);
+      }
+      .badge-weak {
+        background: var(--rust-light);
+        color: var(--rust);
+      }
+      .const-hint {
+        font-size: 0.7rem;
+        color: var(--charcoal-light);
+        font-style: italic;
+        margin-top: 1.25rem;
+      }
+
+      /* ── RADAR ─────────────────────────────── */
+      #radar {
+        background: var(--ivory-2);
+        padding: 5rem 2rem;
+      }
+      .radar-layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 3rem;
+        align-items: start;
+        margin-top: 2rem;
+      }
+      @media (max-width: 720px) {
+        .radar-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      .radar-wrap {
+        width: 100%;
+        max-width: 380px;
+        margin: 0 auto;
+      }
+      .radar-wrap svg {
+        width: 100%;
+        height: auto;
+      }
+      .radar-panel {
+        background: #fdfcf9;
+        border: 1px solid var(--gray-line);
+        border-radius: 2px;
+        padding: 1.75rem;
+      }
+      .radar-panel-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--charcoal);
+        margin-bottom: 0.4rem;
+      }
+      .radar-panel-score {
+        font-family: "Playfair Display", serif;
+        font-size: 2.3rem;
+        font-weight: 700;
+        color: var(--navy);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .radar-panel-score span {
+        font-size: 0.95rem;
+        font-weight: 400;
+        color: var(--charcoal-light);
+        font-family: "DM Sans", sans-serif;
+      }
+      .radar-panel-text {
+        font-size: 0.87rem;
+        line-height: 1.72;
+        color: var(--charcoal-mid);
+      }
+      .radar-note {
+        font-size: 0.78rem;
+        color: var(--charcoal-light);
+        font-style: italic;
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--gray-line);
+        line-height: 1.6;
+      }
+      .radar-hint {
+        font-size: 0.7rem;
+        color: var(--charcoal-light);
+        font-style: italic;
+        margin-top: 0.75rem;
+      }
+
+      /* ── STORY CARDS ───────────────────────── */
+      #stories {
+        background: var(--ivory);
+        padding: 5rem 2rem;
+      }
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin: 1.5rem 0 2rem;
+      }
+      .fbtn {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.38rem 0.85rem;
+        border: 1px solid var(--gray-line);
+        border-radius: 2px;
+        background: var(--ivory);
+        color: var(--charcoal-light);
+        cursor: pointer;
+        transition: all 0.18s;
+      }
+      .fbtn:hover {
+        border-color: var(--navy);
+        color: var(--navy);
+      }
+      .fbtn.fa {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: #fff;
+      }
+      .fbtn.fb {
+        background: var(--rust);
+        border-color: var(--rust);
+        color: #fff;
+      }
+      .stories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.2rem;
+      }
+      .sc {
+        background: #fdfcf9;
+        border: 1px solid var(--gray-line);
+        border-radius: 2px;
+        padding: 1.5rem;
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s,
+          opacity 0.3s,
+          max-height 0.3s;
+      }
+      .sc:hover {
+        box-shadow: 0 4px 20px rgba(26, 43, 74, 0.08);
+        transform: translateY(-2px);
+      }
+      .sc.hidden {
+        opacity: 0;
+        pointer-events: none;
+        max-height: 0;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        margin: 0;
+      }
+      .sc-src {
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--charcoal-light);
+        margin-bottom: 0.35rem;
+      }
+      .sc-tag {
+        display: inline-block;
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        padding: 0.15rem 0.48rem;
+        border-radius: 2px;
+        margin-bottom: 0.7rem;
+      }
+      .t-markets {
+        background: var(--navy-light);
+        color: var(--navy);
+      }
+      .t-ai {
+        background: #eaf5f0;
+        color: #1a5c42;
+      }
+      .t-war {
+        background: #f5eaea;
+        color: #6b2020;
+      }
+      .t-trade {
+        background: #eef0f5;
+        color: #3a4a6b;
+      }
+      .t-geopolitics {
+        background: #f5f0ea;
+        color: #6b4a20;
+      }
+      .t-blindspot {
+        background: var(--rust-light);
+        color: var(--rust);
+      }
+      .sc-title {
+        font-family: "Playfair Display", serif;
+        font-size: 0.98rem;
+        font-weight: 600;
+        color: var(--charcoal);
+        margin-bottom: 0.55rem;
+        line-height: 1.35;
+      }
+      .sc-interp {
+        font-size: 0.81rem;
+        color: var(--charcoal-light);
+        line-height: 1.65;
+        font-style: italic;
+      }
+
+      /* ── DISCOVERY ─────────────────────────── */
+      #chart3 {
+        background: var(--ivory);
+      }
+      .disc-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      @media (max-width: 640px) {
+        .disc-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+      .disc-card {
+        padding: 2rem 1.75rem;
+        border-radius: 2px;
+      }
+      .disc-me {
+        background: var(--navy);
+        color: #fff;
+      }
+      .disc-sec {
+        background: #fdfcf9;
+        border: 1px solid var(--gray-line);
+      }
+      .disc-kicker {
+        font-size: 0.67rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.7rem;
+      }
+      .disc-me .disc-kicker {
+        color: var(--yellow);
+      }
+      .disc-sec .disc-kicker {
+        color: var(--rust);
+      }
+      .disc-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.9rem;
+        line-height: 1.3;
+      }
+      .disc-me h3 {
+        color: #fff;
+      }
+      .disc-sec h3 {
+        color: var(--charcoal);
+      }
+      .disc-card p {
+        font-size: 0.89rem;
+        line-height: 1.75;
+      }
+      .disc-me p {
+        color: rgba(255, 255, 255, 0.76);
+      }
+      .disc-sec p {
+        color: var(--charcoal-mid);
+      }
+      .ptag-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 1.1rem;
+      }
+      .ptag {
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        padding: 0.22rem 0.55rem;
+        border-radius: 2px;
+      }
+      .disc-me .ptag {
+        background: rgba(255, 255, 255, 0.11);
+        color: rgba(255, 255, 255, 0.82);
+      }
+      .disc-sec .ptag {
+        background: var(--gray-subtle);
+        color: var(--charcoal-light);
+      }
+      .disc-insight {
+        margin-top: 2rem;
+        padding: 1.2rem 1.6rem;
+        background: var(--yellow-light);
+        border-left: 3px solid var(--yellow);
+        font-family: "Playfair Display", serif;
+        font-size: 0.98rem;
+        font-style: italic;
+        color: var(--charcoal);
+        border-radius: 0 2px 2px 0;
+      }
+
+      /* ── ESSAY ─────────────────────────────── */
+      #essay {
+        background: var(--ivory-2);
+        padding: 5rem 2rem;
+      }
+      .essay-layout {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 210px 1fr;
+        gap: 4rem;
+        align-items: start;
+      }
+      @media (max-width: 820px) {
+        .essay-layout {
+          grid-template-columns: 1fr;
+        }
+        .essay-nav {
+          display: none;
+        }
+      }
+      .essay-nav {
+        position: sticky;
+        top: 80px;
+      }
+      .enav-label {
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--charcoal-light);
+        margin-bottom: 1rem;
+        padding-bottom: 0.7rem;
+        border-bottom: 1px solid var(--gray-line);
+      }
+      .enav-links {
+        list-style: none;
+      }
+      .enav-links li {
+        margin-bottom: 0.05rem;
+      }
+      .enav-links a {
+        font-size: 0.79rem;
+        color: var(--charcoal-light);
+        text-decoration: none;
+        display: block;
+        padding: 0.38rem 0.7rem;
+        border-left: 2px solid transparent;
+        transition: all 0.2s;
+        line-height: 1.4;
+      }
+      .enav-links a:hover,
+      .enav-links a.active {
+        color: var(--navy);
+        border-left-color: var(--navy);
+        background: var(--navy-light);
+      }
+      .essay-content {
+        max-width: 660px;
+      }
+      .essay-intro {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        font-weight: 400;
+        font-style: italic;
+        color: var(--charcoal);
+        line-height: 1.7;
+        margin-bottom: 3.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--gray-line);
+      }
+      .es {
+        margin-bottom: 3.5rem;
+        scroll-margin-top: 80px;
+      }
+      .es h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--charcoal);
+        margin-bottom: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .snum {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--rust);
+        border: 1px solid var(--rust);
+        padding: 0.14rem 0.48rem;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+      .es p {
+        font-family: "Source Serif 4", serif;
+        font-size: 1.01rem;
+        line-height: 1.9;
+        color: var(--charcoal-mid);
+        margin-bottom: 1.2rem;
+      }
+      .essay-hl {
+        background: var(--yellow-light);
+        border-left: 3px solid var(--yellow);
+        padding: 0.95rem 1.2rem;
+        margin: 1.4rem 0;
+        font-family: "Source Serif 4", serif;
+        font-size: 1.01rem;
+        line-height: 1.9;
+        color: var(--charcoal);
+      }
+
+      /* ── FEEDBACK ──────────────────────────── */
+      #feedback {
+        background: var(--ivory);
+      }
+      .fb-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.4rem;
+        margin-top: 2rem;
+      }
+      @media (max-width: 600px) {
+        .fb-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .fb-card {
+        padding: 1.65rem;
+        border: 1px solid var(--gray-line);
+        background: #fdfcf9;
+        border-radius: 2px;
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+      .fb-card:hover {
+        box-shadow: 0 4px 20px rgba(26, 43, 74, 0.08);
+        transform: translateY(-2px);
+      }
+      .fb-kicker {
+        font-size: 0.67rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--rust);
+        margin-bottom: 0.45rem;
+      }
+      .fb-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.02rem;
+        font-weight: 600;
+        color: var(--charcoal);
+        margin-bottom: 0.7rem;
+        line-height: 1.35;
+      }
+      .fb-card p {
+        font-size: 0.89rem;
+        color: var(--charcoal-mid);
+        line-height: 1.7;
+      }
+
+      /* ── TAKEAWAY ──────────────────────────── */
+      #takeaway {
+        background: var(--charcoal);
+        padding: 7rem 2rem;
+      }
+      .ta-inner {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .qmark {
+        font-family: "Playfair Display", serif;
+        font-size: 6rem;
+        line-height: 0.5;
+        color: var(--navy-mid);
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+      .bquote {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+        font-weight: 400;
+        font-style: italic;
+        color: #fff;
+        line-height: 1.45;
+        margin-bottom: 2rem;
+      }
+      .bquote em {
+        font-style: normal;
+        background: linear-gradient(to right, var(--yellow), var(--yellow));
+        background-size: 100% 0.12em;
+        background-repeat: no-repeat;
+        background-position: 0 90%;
+        padding-bottom: 2px;
+      }
+      .ta-sub {
+        font-family: "Source Serif 4", serif;
+        font-size: 1.03rem;
+        color: rgba(255, 255, 255, 0.58);
+        line-height: 1.8;
+      }
+      .ta-line {
+        width: 40px;
+        height: 1px;
+        background: var(--navy-mid);
+        margin: 2.5rem auto;
+      }
+      .footer-meta {
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.28);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tooltip" id="tt"></div>
+
+    <!-- NAV -->
+    <nav>
+      <span class="nav-brand">My News Diet, Compared</span>
+      <ul class="nav-links">
+        <li><a href="#snapshot">Overview</a></li>
+        <li><a href="#donut">My Diet</a></li>
+        <li><a href="#timeline">Rhythm</a></li>
+        <li><a href="#constellation">Systems</a></li>
+        <li><a href="#radar">Blind Spots</a></li>
+        <li><a href="#stories">Stories</a></li>
+        <li><a href="#essay">Essay</a></li>
+        <li><a href="#takeaway">Takeaway</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="floating-headlines" id="floatHL"></div>
+      <div class="hero-bg-lines"></div>
+      <div class="hero-inner">
+        <div class="hero-kicker">Spring 2026 · News in a Complex World</div>
+        <h1 class="hero-title">My News<br /><span>Diet,</span> Compared</h1>
+        <h2 class="hero-subtitle">From Headlines to Systems</h2>
+        <p class="hero-desc">
+          A data reflection on how I read news differently from my section,
+          based on 76 personal Share a Story submissions and 1,327 section
+          submissions from Spring 2026.
+        </p>
+        <div class="stat-cards fade-in">
+          <div class="stat-card">
+            <span class="stat-num" data-count="76">0</span
+            ><span class="stat-label">Personal stories submitted</span>
+            <div class="stat-bar"></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" data-count="1327">0</span
+            ><span class="stat-label">Section stories submitted</span>
+            <div class="stat-bar"></div>
+          </div>
+          <div class="stat-card" style="background: var(--yellow-light)">
+            <span class="stat-num" data-cpct="81.6">0%</span
+            ><span class="stat-label">My top two sources share</span>
+            <div class="stat-bar"></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" data-cpct="37">0%</span
+            ><span class="stat-label">Section top two sources share</span>
+            <div class="stat-bar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SNAPSHOT -->
+    <section id="snapshot">
+      <div class="section-inner">
+        <div class="section-label">Data Overview</div>
+        <h2 class="section-title fade-in">
+          A More Concentrated<br />News Diet
+        </h2>
+        <p class="section-body fade-in d1">
+          My data shows a much more concentrated news diet than the section
+          average. While the class drew from a broad mix of publications and
+          platforms — from NPR to Vogue, from BBC to Gothamist — my own
+          submissions relied heavily on the Financial Times and The New York
+          Times. Two sources. More than eighty percent of my reading.
+        </p>
+      </div>
+    </section>
+
+    <!-- DONUT -->
+    <section id="donut">
+      <div class="section-inner">
+        <div class="section-label">News Plate</div>
+        <h2 class="section-title fade-in">What My News Diet Was Made Of</h2>
+        <div class="donut-layout fade-in d1">
+          <div class="donut-wrap">
+            <svg
+              id="donut-svg"
+              viewBox="0 0 280 280"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+            <div class="donut-center">
+              <div class="donut-center-num">76</div>
+              <div class="donut-center-label">stories</div>
+            </div>
+          </div>
+          <div>
+            <div class="donut-legend" id="donut-legend"></div>
+            <div class="donut-desc" id="donut-desc">
+              Hover or click a segment to read an interpretation.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECTRUM -->
+    <section id="spectrum">
+      <div class="section-inner">
+        <div class="section-label">Source Diversity</div>
+        <h2 class="section-title">Concentrated vs. Diverse</h2>
+        <div class="spectrum-wrap fade-in">
+          <div class="spectrum-ends">
+            <span>← Concentrated</span><span>Diverse →</span>
+          </div>
+          <div class="spectrum-track" id="spectrum-track"></div>
+          <p class="spectrum-caption">
+            A higher top-two source concentration means less diversity. My top
+            two sources accounted for 81.6% of submissions; the section's top
+            two accounted for 37%. A more distributed spread indicates a broader
+            information diet.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHART 1 -->
+    <section id="chart1">
+      <div class="section-inner">
+        <div class="section-label">Chart 1</div>
+        <h2 class="section-title">Source Concentration</h2>
+        <div class="chart-box fade-in">
+          <div class="chart-title">
+            Source Concentration: Me vs. the Section
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: flex-end;
+              gap: 1.5rem;
+              margin-bottom: 1.5rem;
+              font-size: 0.75rem;
+              color: var(--charcoal-light);
+            "
+          >
+            <span style="display: flex; align-items: center; gap: 0.4rem"
+              ><span class="dot dm"></span>Me</span
+            >
+            <span style="display: flex; align-items: center; gap: 0.4rem"
+              ><span class="dot ds"></span>Section</span
+            >
+          </div>
+          <div class="bar-group">
+            <div class="bar-metric">Top source share</div>
+            <div class="bar-pair">
+              <div class="bar-row-label" style="margin-top: 0">
+                Me (Financial Times)
+              </div>
+              <div
+                class="bar-track"
+                data-tt="Top Source Share|Me: 50.0%|Half of all my submissions came from a single publication. The Financial Times shaped my habit of reading events through markets, policy, and global risk."
+              >
+                <div class="bar-fill bf-me" style="width: 0" data-t="50">
+                  <span class="bar-fill-pct">50.0%</span>
+                </div>
+              </div>
+              <div class="bar-row-label">Section (New York Times)</div>
+              <div
+                class="bar-track"
+                data-tt="Top Source Share|Section: 27.9%|The NYT led the section, but represented less than a third of submissions — a much less dominant single source."
+              >
+                <div class="bar-fill bf-sec" style="width: 0" data-t="27.9">
+                  <span class="bar-fill-pct">27.9%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-metric">Top two sources share</div>
+            <div class="bar-pair">
+              <div class="bar-row-label" style="margin-top: 0">
+                Me (FT + NYT)
+              </div>
+              <div
+                class="bar-track"
+                data-tt="Top Two Sources|Me: 81.6%|FT and NYT together accounted for over four-fifths of my entire news diet — a striking concentration around two institutional frames."
+              >
+                <div class="bar-fill bf-me" style="width: 0" data-t="81.6">
+                  <span class="bar-fill-pct">81.6%</span>
+                </div>
+              </div>
+              <div class="bar-row-label">Section (NYT + NPR)</div>
+              <div
+                class="bar-track"
+                data-tt="Top Two Sources|Section: 37.0%|The section's top two covered just over a third of submissions — far more distributed across many outlets and platforms."
+              >
+                <div class="bar-fill bf-sec" style="width: 0" data-t="37">
+                  <span class="bar-fill-pct">37.0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-metric">Financial Times share</div>
+            <div class="bar-pair">
+              <div class="bar-row-label" style="margin-top: 0">Me</div>
+              <div
+                class="bar-track"
+                data-tt="Financial Times|Me: 50.0%|One publication, half my stories. The FT's emphasis on markets, trade, and institutional power shaped the lens through which I read most events."
+              >
+                <div class="bar-fill bf-me" style="width: 0" data-t="50">
+                  <span class="bar-fill-pct">50.0%</span>
+                </div>
+              </div>
+              <div class="bar-row-label">Section</div>
+              <div
+                class="bar-track"
+                data-tt="Financial Times|Section: 3.5%|Only 46 of 1,327 section stories came from the FT — a niche source for the class, a dominant one for me."
+              >
+                <div class="bar-fill bf-sec" style="width: 0" data-t="3.5">
+                  <span class="bar-fill-pct">3.5%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="chart-caption">
+            My top two sources made up more than 80% of my submissions, while
+            the section's top two made up about 37%. This shows that my news
+            habits were more concentrated and institutionally framed than the
+            class average.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHART 2 -->
+    <section id="chart2">
+      <div class="section-inner">
+        <div class="section-label">Chart 2</div>
+        <h2 class="section-title">Top Publications</h2>
+        <div class="two-col fade-in">
+          <div class="pub-col">
+            <div class="pub-col-title">
+              <span class="dot dm"></span>My Top Sources
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">Financial Times</span
+                ><span class="pbs">38 stories · 50.0%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfm" style="width: 0" data-t="100"></div>
+              </div>
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">New York Times</span
+                ><span class="pbs">24 stories · 31.6%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfm" style="width: 0" data-t="63.2"></div>
+              </div>
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">Morning Brew</span
+                ><span class="pbs">7 stories · 9.2%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfm" style="width: 0" data-t="18.4"></div>
+              </div>
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">Bloomberg</span
+                ><span class="pbs">3 stories · 3.9%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfm" style="width: 0" data-t="7.8"></div>
+              </div>
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">Others</span
+                ><span class="pbs">4 stories · 5.3%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfm" style="width: 0" data-t="10.6"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pub-col">
+            <div class="pub-col-title">
+              <span class="dot ds"></span>Section Top Sources
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">New York Times</span
+                ><span class="pbs">370 stories · 27.9%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfs" style="width: 0" data-t="100"></div>
+              </div>
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">NPR</span
+                ><span class="pbs">121 stories · 9.1%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfs" style="width: 0" data-t="32.7"></div>
+              </div>
+            </div>
+            <div class="pbr">
+              <div class="pbm">
+                <span class="pbn">Financial Times</span
+                ><span class="pbs">46 stories · 3.5%</span>
+              </div>
+              <div class="pbt">
+                <div class="pbf pbfs" style="width: 0" data-t="12.4"></div>
+              </div>
+            </div>
+            <div class="pub-note">
+              Other frequent section sources included BBC, CNN, AP, NBC, The
+              Guardian, Vogue, Variety, Rolling Stone, Gothamist, and social
+              media discovery paths.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="section-inner">
+        <div class="section-label">Rhythm of Attention</div>
+        <h2 class="section-title">Rhythm of Attention Across the Semester</h2>
+        <div class="tl-layout">
+          <div>
+            <div class="tl-months" id="tl-months"></div>
+            <p class="tl-hint">Click a month to read an interpretation</p>
+          </div>
+          <div class="tl-panel" id="tl-panel">
+            <div class="tl-panel-mo" id="tp-mo">Select a month</div>
+            <div class="tl-panel-n" id="tp-n">—</div>
+            <div class="tl-panel-t" id="tp-t">
+              Click any bar to see an interpretation of that period.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSTELLATION -->
+    <section id="constellation">
+      <div class="section-inner">
+        <div class="section-label">Systems Map</div>
+        <h2 class="section-title">From Headlines to Systems</h2>
+        <p
+          style="
+            font-size: 0.93rem;
+            color: var(--charcoal-mid);
+            max-width: 580px;
+            margin-bottom: 0.5rem;
+          "
+        >
+          Each node represents a topic area. Larger filled nodes were strongly
+          represented in my submissions. Smaller dashed nodes were
+          underrepresented. Click any node to read a reflection.
+        </p>
+        <div class="const-layout">
+          <div class="const-svg-wrap fade-in">
+            <svg
+              id="const-svg"
+              viewBox="0 0 500 430"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+          </div>
+          <div class="const-panel">
+            <div class="const-panel-tag" id="cp-tag">Topic</div>
+            <div class="const-panel-title" id="cp-title">Select a node</div>
+            <div class="const-panel-text" id="cp-text">
+              Click any topic node in the map to read a reflection on how it
+              appeared — or didn't appear — in my news submissions.
+            </div>
+            <div id="cp-badge"></div>
+            <p class="const-hint">
+              Larger = more represented · Dashed outline = underrepresented
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RADAR -->
+    <section id="radar">
+      <div class="section-inner">
+        <div class="section-label">Blind Spots</div>
+        <h2 class="section-title">What My News Diet Emphasized — and Missed</h2>
+        <div class="radar-layout">
+          <div class="radar-wrap fade-in">
+            <svg
+              id="radar-svg"
+              viewBox="0 0 380 380"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+          </div>
+          <div>
+            <div class="radar-panel">
+              <div class="radar-panel-title" id="rp-title">
+                Hover an axis to explore
+              </div>
+              <div class="radar-panel-score" id="rp-score"></div>
+              <div class="radar-panel-text" id="rp-text">
+                This radar chart shows the interpretive balance of my news diet
+                across eight dimensions. Hover or tap each axis label to read
+                what each represents in my submissions.
+              </div>
+            </div>
+            <p class="radar-note">
+              This chart is interpretive rather than purely quantitative. It
+              visualizes what my submissions emphasized and what they left
+              underrepresented.
+            </p>
+            <p class="radar-hint">Hover or tap each axis label for details</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY CARDS -->
+    <section id="stories">
+      <div class="section-inner">
+        <div class="section-label">Pattern Explorer</div>
+        <h2 class="section-title">Explore the Pattern Through Story Types</h2>
+        <p
+          style="
+            font-size: 0.93rem;
+            color: var(--charcoal-mid);
+            max-width: 580px;
+            margin-bottom: 0;
+          "
+        >
+          These representative story types — not invented headlines — illustrate
+          the kinds of stories I consistently chose and what they reveal about
+          my news habits.
+        </p>
+        <div class="filter-row" id="filter-row"></div>
+        <div class="stories-grid" id="stories-grid"></div>
+      </div>
+    </section>
+
+    <!-- CHART 3 -->
+    <section id="chart3">
+      <div class="section-inner">
+        <div class="section-label">Chart 3</div>
+        <h2 class="section-title">Discovery Path Comparison</h2>
+        <div class="disc-cards fade-in">
+          <div class="disc-card disc-me">
+            <div class="disc-kicker">My Pattern</div>
+            <h3>Direct-to-source reading</h3>
+            <p>
+              I mostly went directly to a few publications I trusted — the
+              Financial Times, The New York Times, Morning Brew, and Bloomberg.
+              This helped me avoid low-quality viral content, but limited source
+              diversity.
+            </p>
+            <div class="ptag-wrap">
+              <span class="ptag">Financial Times</span
+              ><span class="ptag">New York Times</span
+              ><span class="ptag">Morning Brew</span
+              ><span class="ptag">Bloomberg</span>
+            </div>
+          </div>
+          <div class="disc-card disc-sec">
+            <div class="disc-kicker">Section Pattern</div>
+            <h3>Mixed platform discovery</h3>
+            <p>
+              The section data showed more varied discovery paths, including
+              Instagram, TikTok, Twitter/X, Reddit, Google, Apple News, news
+              apps, and publication websites. This created variety, but also
+              more algorithmic influence.
+            </p>
+            <div class="ptag-wrap">
+              <span class="ptag">Instagram</span><span class="ptag">TikTok</span
+              ><span class="ptag">Twitter/X</span
+              ><span class="ptag">Reddit</span
+              ><span class="ptag">Apple News</span
+              ><span class="ptag">Google</span>
+            </div>
+          </div>
+        </div>
+        <div class="disc-insight fade-in d2">
+          "Different discovery paths create different blind spots."
+        </div>
+      </div>
+    </section>
+
+    <!-- ESSAY -->
+    <section id="essay">
+      <div class="essay-layout">
+        <aside class="essay-nav">
+          <div class="enav-label">Essay Sections</div>
+          <ul class="enav-links">
+            <li><a href="#es-1">Seeing My News Habits as Data</a></li>
+            <li><a href="#es-2">A Concentrated News Diet</a></li>
+            <li><a href="#es-3">Reading Through Systems</a></li>
+            <li><a href="#es-4">What My Data Leaves Out</a></li>
+            <li><a href="#es-5">Feedback on Share a Story</a></li>
+            <li><a href="#es-6">Final Takeaway</a></li>
+          </ul>
+        </aside>
+        <div class="essay-content">
+          <div class="section-label">Full Reflection</div>
+          <h2 class="section-title" style="margin-bottom: 1.5rem">The Essay</h2>
+          <p class="essay-intro">
+            "Share a Story made my news habits visible in a way that normal
+            scrolling does not."
+          </p>
+          <div class="es" id="es-1">
+            <h3><span class="snum">01</span>Seeing My News Habits as Data</h3>
+            <p>
+              Over the semester, Share a Story made my news habits visible in a
+              way that normal scrolling does not. Before looking at my data, I
+              thought of my news choices as mostly practical: I saw a headline,
+              judged whether it seemed important, and decided whether to share
+              it. But after downloading my own data and comparing it with my
+              section's data, I realized that my choices formed a clear pattern.
+              I was not just reading "the news" in a general sense. I was
+              repeatedly choosing stories about global systems: geopolitics,
+              markets, technology, war, AI, trade, energy, and institutional
+              power. Share a Story helped me see both the strength and the
+              limitation of that habit.
+            </p>
+          </div>
+          <div class="es" id="es-2">
+            <h3><span class="snum">02</span>A Concentrated News Diet</h3>
+            <p>
+              The clearest pattern in my own data is source concentration. Out
+              of 76 stories I shared, 38 came from the Financial Times, which is
+              exactly 50 percent of my submissions. Another 24 came from The New
+              York Times, about 31.6 percent. Together, these two sources made
+              up more than 80 percent of my news diet.
+            </p>
+            <div class="essay-hl">
+              That surprised me because I did not realize how narrow my source
+              range was until I saw it as data. I usually think of myself as
+              reading different stories, but in reality many of those stories
+              came through the same two institutional frames.
+            </div>
+            <p>
+              The Financial Times especially shaped how I understood news
+              because it often connects events to markets, policy decisions,
+              business strategy, and global risk. This made my summaries more
+              analytical, but it also limited the kinds of perspectives I
+              encountered.
+            </p>
+            <p>
+              The section data made this pattern even clearer. Across the class,
+              there were 1,327 shared stories from a much wider range of
+              sources. The New York Times was still the most common source in
+              the section, but it made up only about 27.9 percent of the class
+              submissions. The top two sources in the section made up about 37
+              percent, while my top two sources made up more than 80 percent.
+              The class data included sources such as NPR, BBC, CNN, AP, NBC,
+              The Guardian, Vogue, Variety, Rolling Stone, and Gothamist, along
+              with stories found through Instagram, TikTok, Twitter, Reddit,
+              Google, Apple News, and other platforms. Compared with that, my
+              own data shows a much more controlled and less casual way of
+              finding news. I was mostly going directly to publications I
+              already trusted.
+            </p>
+          </div>
+          <div class="es" id="es-3">
+            <h3><span class="snum">03</span>Reading Through Systems</h3>
+            <p>
+              This pattern says something about how I read the world. I tend to
+              be drawn to stories where one event affects many systems at once.
+              For example, I shared several stories about conflict and its
+              effects on oil prices, aviation, inflation, global trade, and
+              financial markets. I also shared stories about AI companies,
+              software vulnerabilities, data centers, and the economic pressure
+              created by new technology. These stories interested me because
+              they were not only about one person, one company, or one event.
+              They showed chain reactions. A war is not only a military story;
+              it can become an energy story, a travel story, a market story, and
+              a consumer story. AI is not only a technology story; it is also a
+              labor, infrastructure, investment, and regulation story.
+            </p>
+            <p>
+              Because of this, Share a Story helped me practice a more
+              structural way of reading news. The "what happened" and "why it
+              matters" format was especially useful. It forced me to separate
+              the basic event from its significance. A headline may tell me what
+              happened, but the "why it matters" part asks me to explain the
+              consequences. Over time, I became less interested in simply
+              choosing a dramatic headline and more interested in asking: Who is
+              affected? What system is being revealed? What institution has
+              power here? What economic or political consequences might follow?
+              This was probably the most valuable habit I developed through the
+              project.
+            </p>
+          </div>
+          <div class="es" id="es-4">
+            <h3><span class="snum">04</span>What My Data Leaves Out</h3>
+            <p>
+              However, my data also shows what is missing from my news habits.
+              If most of my stories come from the Financial Times and The New
+              York Times, then my understanding of the news is shaped by elite
+              English-language media. These sources are useful, but they do not
+              represent every perspective. My submissions included fewer local
+              stories, fewer community-based stories, fewer cultural stories,
+              and fewer stories centered on ordinary people's daily experiences.
+              I also shared less from smaller publications, nonprofit newsrooms,
+              student journalism, or sources outside the major U.S., European,
+              and Chinese geopolitical frame. This matters because a healthy
+              news habit should not only mean reading serious global news. It
+              should also mean paying attention to whose lives are made visible
+              and whose lives are left out.
+            </p>
+            <p>
+              Compared with the section, I also seemed less influenced by social
+              media discovery. This is both a strength and a weakness. On one
+              hand, going directly to trusted publications may help me avoid
+              misinformation, low-quality viral content, or emotionally
+              manipulative posts. On the other hand, social platforms sometimes
+              expose people to stories that mainstream institutional sources may
+              not prioritize, especially local, cultural, or community-centered
+              stories. The problem is not that one path is better than the
+              other. The problem is that every path creates blind spots. My path
+              gave me depth in global systems, but less variety in voice, scale,
+              and emotional perspective.
+            </p>
+          </div>
+          <div class="es" id="es-5">
+            <h3><span class="snum">05</span>Feedback on Share a Story</h3>
+            <p>
+              As a learning tool, Share a Story succeeded because it made news
+              reading active instead of passive. I was not only consuming
+              headlines; I had to choose one story, summarize it, and explain
+              why it mattered. My favorite part was the discipline of writing a
+              short "why it matters" statement. It trained me to think more like
+              an editor: What is the real significance of this story? Why should
+              someone else care? The most difficult part was that the activity
+              sometimes felt repetitive. Without regular feedback, it was hard
+              to know whether my summaries were improving or whether my source
+              choices were becoming too narrow. I would have liked more feedback
+              on writing clarity, source reliability, source diversity, and
+              whether my "why it matters" explanation was specific enough.
+            </p>
+            <p>
+              For future students, I would suggest treating Share a Story not
+              only as a daily assignment, but as a personal news map. Students
+              should occasionally look back at their own submissions and ask
+              what patterns are forming. What sources do they rely on? What
+              topics do they keep choosing? What kinds of stories do they avoid?
+              The platform itself could support this by adding small dashboards,
+              such as source breakdowns, topic tags, submission timelines, and
+              comparisons with the section average. These features would make
+              the learning goal more visible.
+            </p>
+          </div>
+          <div class="es" id="es-6">
+            <h3><span class="snum">06</span>Final Takeaway</h3>
+            <p>
+              Overall, Share a Story helped me build a more intentional news
+              habit. It did not make my news diet perfectly balanced, but it
+              helped me understand my own pattern. I learned that I am strongest
+              at connecting individual stories to larger systems, especially in
+              politics, economics, technology, and global risk. I also learned
+              that I need to expand my attention toward more local, cultural,
+              emotional, and community-based perspectives. For me, the value of
+              Share a Story was not only that it made me read more news. It made
+              me question how I read, what I trust, and what I might be missing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEEDBACK -->
+    <section id="feedback">
+      <div class="section-inner">
+        <div class="section-label">Product Reflection</div>
+        <h2 class="section-title">Feedback on Share a Story</h2>
+        <div class="fb-grid fade-in">
+          <div class="fb-card">
+            <div class="fb-kicker">Favorite Part</div>
+            <h3>The "why it matters" format</h3>
+            <p>
+              It trained me to move beyond summary and explain significance.
+              Every story had to earn its place with a meaningful consequence.
+            </p>
+          </div>
+          <div class="fb-card">
+            <div class="fb-kicker">Most Difficult Part</div>
+            <h3>Repetition without feedback</h3>
+            <p>
+              The routine was useful, but it was hard to know whether my
+              summaries were improving — or whether my source choices were
+              narrowing without me noticing.
+            </p>
+          </div>
+          <div class="fb-card">
+            <div class="fb-kicker">What I Wanted More Of</div>
+            <h3>Feedback on source diversity and writing clarity</h3>
+            <p>
+              The platform could give students small signals about overused
+              sources, unclear summaries, or vague "why it matters" explanations
+              — turning habit into reflection.
+            </p>
+          </div>
+          <div class="fb-card">
+            <div class="fb-kicker">Tip for Future Students</div>
+            <h3>Use it as a personal news map</h3>
+            <p>
+              Look back at your own data and ask what you keep choosing, what
+              you avoid, and what perspectives are missing. The patterns are
+              more revealing than any single story.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAKEAWAY -->
+    <section id="takeaway">
+      <div class="ta-inner">
+        <span class="qmark">"</span>
+        <p class="bquote">
+          Share a Story did not make my news diet <em>perfectly balanced</em>,
+          but it made my pattern visible.
+        </p>
+        <div class="ta-line"></div>
+        <p class="ta-sub">
+          That visibility matters because it turns news consumption into
+          something I can question, adjust, and improve.
+        </p>
+        <div class="ta-line"></div>
+        <p class="footer-meta">
+          Spring 2026 · News in a Complex World · Share a Story Reflection
+        </p>
+      </div>
+    </section>
+
+    <script>
+      // ================================================================
+      //  DATA
+      // ================================================================
+      const DONUT_DATA = [
+        {
+          label: "Financial Times",
+          count: 38,
+          pct: 50.0,
+          color: "#1A2B4A",
+          desc: "This source shaped my habit of reading news through markets, policy, and global risk. Half of all my submissions came through this single institutional lens.",
+        },
+        {
+          label: "New York Times",
+          count: 24,
+          pct: 31.6,
+          color: "#2C4270",
+          desc: "The NYT added political and domestic depth. Together with the FT, these two sources framed more than 80% of my news diet.",
+        },
+        {
+          label: "Morning Brew",
+          count: 7,
+          pct: 9.2,
+          color: "#9B3F2B",
+          desc: "A more accessible, digest-style source that connected business and tech news concisely — a lighter complement to the FT and NYT.",
+        },
+        {
+          label: "Bloomberg",
+          count: 3,
+          pct: 3.9,
+          color: "#C25B42",
+          desc: "A few Bloomberg stories added market and financial depth, reinforcing my tendency toward economic and institutional analysis.",
+        },
+        {
+          label: "Others",
+          count: 4,
+          pct: 5.3,
+          color: "#D8D3CB",
+          desc: "A small cluster of other sources — representing the limited diversity outside my main institutional outlets.",
+        },
+      ];
+      const MONTH_DATA = [
+        {
+          name: "January",
+          count: 3,
+          interp:
+            "A small starting point before the habit became regular. These early submissions were exploratory rather than systematic.",
+        },
+        {
+          name: "February",
+          count: 23,
+          interp:
+            "The habit became more consistent, and my source pattern started to emerge. The Financial Times and NYT began to dominate my selections.",
+        },
+        {
+          name: "March",
+          count: 21,
+          interp:
+            "My attention stayed focused on global systems — business, politics, and technology. The rhythm was steady but the lens remained narrow.",
+        },
+        {
+          name: "April",
+          count: 26,
+          interp:
+            "The most active month, showing the strongest rhythm of weekly news selection. Topics in AI, geopolitics, and trade dominated this period.",
+        },
+        {
+          name: "May",
+          count: 3,
+          interp:
+            "A short final period as the semester ended. A few stories closed out the semester's pattern of systems-focused reading.",
+        },
+      ];
+      const CONST_NODES = [
+        {
+          id: "center",
+          label: "Systems\nThinking",
+          x: 250,
+          y: 210,
+          r: 31,
+          type: "center",
+        },
+        {
+          id: "geopolitics",
+          label: "Geopolitics",
+          x: 130,
+          y: 88,
+          r: 23,
+          type: "strong",
+        },
+        {
+          id: "markets",
+          label: "Markets",
+          x: 370,
+          y: 98,
+          r: 23,
+          type: "strong",
+        },
+        { id: "ai", label: "AI", x: 420, y: 208, r: 22, type: "strong" },
+        { id: "war", label: "War", x: 390, y: 328, r: 21, type: "strong" },
+        { id: "trade", label: "Trade", x: 250, y: 360, r: 20, type: "strong" },
+        {
+          id: "energy",
+          label: "Energy",
+          x: 112,
+          y: 312,
+          r: 18,
+          type: "strong",
+        },
+        {
+          id: "technology",
+          label: "Technology",
+          x: 78,
+          y: 182,
+          r: 20,
+          type: "strong",
+        },
+        { id: "china", label: "China", x: 178, y: 342, r: 15, type: "mid" },
+        {
+          id: "uspolitics",
+          label: "U.S.\nPolitics",
+          x: 330,
+          y: 52,
+          r: 15,
+          type: "mid",
+        },
+        {
+          id: "business",
+          label: "Business",
+          x: 456,
+          y: 142,
+          r: 14,
+          type: "mid",
+        },
+        {
+          id: "localnews",
+          label: "Local\nNews",
+          x: 68,
+          y: 78,
+          r: 12,
+          type: "weak",
+        },
+        {
+          id: "culture",
+          label: "Culture",
+          x: 432,
+          y: 368,
+          r: 12,
+          type: "weak",
+        },
+        {
+          id: "community",
+          label: "Community",
+          x: 154,
+          y: 400,
+          r: 12,
+          type: "weak",
+        },
+        { id: "health", label: "Health", x: 338, y: 390, r: 11, type: "weak" },
+      ];
+      const CONST_TEXT = {
+        center: {
+          title: "Systems Thinking",
+          text: "This was the organizing frame of my entire news diet. I consistently chose stories where one event revealed multiple interconnected systems — economic, political, technological, and institutional.",
+          badge: "center",
+        },
+        ai: {
+          title: "AI",
+          text: "In my submissions, AI was not only a technology topic. I often read it as a labor, infrastructure, investment, and regulation story — a chain-reaction event affecting many sectors at once.",
+          badge: "strong",
+        },
+        war: {
+          title: "War",
+          text: "War appeared as more than military conflict. It connected to oil prices, aviation, inflation, markets, and global supply chains. I read it as a systemic disruption, not only a humanitarian crisis.",
+          badge: "strong",
+        },
+        markets: {
+          title: "Markets",
+          text: "Markets became a way for me to understand how political events turn into economic consequences. The FT's framing made markets a lens for almost every story I chose.",
+          badge: "strong",
+        },
+        geopolitics: {
+          title: "Geopolitics",
+          text: "Many of my stories focused on relations between states, institutions, trade systems, and global risk. Geopolitics was probably the broadest frame connecting most of my submissions.",
+          badge: "strong",
+        },
+        energy: {
+          title: "Energy",
+          text: "Energy appeared frequently as a consequence of geopolitical events — oil prices, supply chain disruptions, and the economics of the energy transition.",
+          badge: "strong",
+        },
+        technology: {
+          title: "Technology",
+          text: "Technology appeared as both a subject and a system. I read technology stories not only about products but about infrastructure, investment, and institutional power.",
+          badge: "strong",
+        },
+        trade: {
+          title: "Trade",
+          text: "Trade stories revealed how global interdependence creates both opportunity and vulnerability. Tariffs, export controls, and supply chain shifts all appeared in this frame.",
+          badge: "strong",
+        },
+        china: {
+          title: "China",
+          text: "This topic helped connect individual headlines to larger political and economic systems. China appeared mainly in trade, technology, and geopolitical contexts.",
+          badge: "mid",
+        },
+        uspolitics: {
+          title: "U.S. Politics",
+          text: "U.S. political stories appeared mainly through their policy and market consequences — consistent with my tendency to read politics through an institutional and economic lens.",
+          badge: "mid",
+        },
+        business: {
+          title: "Business",
+          text: "Business stories tended to focus on institutional decisions and economic consequences, reinforcing the analytical frame that shaped most of my submissions.",
+          badge: "mid",
+        },
+        localnews: {
+          title: "Local News",
+          text: "This was a missing area in my data. My submissions focused more on global systems than local lived experience. Local stories were almost entirely absent.",
+          badge: "weak",
+        },
+        culture: {
+          title: "Culture",
+          text: "Cultural stories appeared less often, showing that my news habit leaned more analytical than emotional or everyday. This is a gap worth acknowledging.",
+          badge: "weak",
+        },
+        community: {
+          title: "Community",
+          text: "Community-centered stories were underrepresented compared with institutional and global stories. My diet was thin on human-scale reporting that local and nonprofit newsrooms often do best.",
+          badge: "weak",
+        },
+        health: {
+          title: "Health",
+          text: "Health stories were not a major part of my submissions, even though they are important to everyday news habits. This absence reflects my tendency to gravitate toward systemic rather than personal-scale stories.",
+          badge: "weak",
+        },
+      };
+      const RADAR_DATA = [
+        {
+          label: "Global Systems",
+          score: 5,
+          angle: 0,
+          desc: "The dominant frame of my news diet. Almost every story connected to a global system — economic, geopolitical, or technological.",
+        },
+        {
+          label: "Institutional\nSources",
+          score: 5,
+          angle: 45,
+          desc: "I relied almost entirely on elite institutional media: the FT, NYT, Bloomberg. This gave depth but reduced perspective diversity.",
+        },
+        {
+          label: "Economics /\nMarkets",
+          score: 5,
+          angle: 90,
+          desc: "Markets appeared in nearly every story I chose, often as the measuring system for political or technological events.",
+        },
+        {
+          label: "Technology\n/ AI",
+          score: 4,
+          angle: 135,
+          desc: "Technology and AI were strong themes, especially as systemic forces shaping labor, infrastructure, and investment.",
+        },
+        {
+          label: "Geopolitics",
+          score: 5,
+          angle: 180,
+          desc: "State relations, trade systems, and institutional power framed most of my global news reading.",
+        },
+        {
+          label: "Local News",
+          score: 1,
+          angle: 225,
+          desc: "Almost entirely absent. My submissions rarely included local or community-level stories.",
+        },
+        {
+          label: "Community\nVoices",
+          score: 1,
+          angle: 270,
+          desc: "Stories centered on ordinary people's experiences were rare. My habit favored institutional perspectives.",
+        },
+        {
+          label: "Culture /\nEveryday",
+          score: 2,
+          angle: 315,
+          desc: "A small number of stories touched on cultural or everyday-life topics, but these were not a priority.",
+        },
+      ];
+      const STORIES_DATA = [
+        {
+          source: "Financial Times",
+          tag: "markets",
+          tl: "Markets",
+          title: "Conflict as an energy and market story",
+          interp:
+            "This represents how I often read global events through their economic consequences — war becoming a commodity price story.",
+        },
+        {
+          source: "Financial Times",
+          tag: "geopolitics",
+          tl: "Geopolitics",
+          title: "Trade policy as a geopolitical instrument",
+          interp:
+            "A representative type showing how I read trade restrictions not as economic policy alone, but as tools of statecraft.",
+        },
+        {
+          source: "New York Times",
+          tag: "ai",
+          tl: "AI",
+          title: "AI infrastructure and the economics of scale",
+          interp:
+            "I chose stories that framed AI as a capital-intensive infrastructure build, not just a consumer technology story.",
+        },
+        {
+          source: "Financial Times",
+          tag: "trade",
+          tl: "Trade",
+          title: "Export controls and global supply chain risk",
+          interp:
+            "This story type reflects my interest in how institutional decisions create cascading effects across industries and nations.",
+        },
+        {
+          source: "New York Times",
+          tag: "war",
+          tl: "War",
+          title: "Military conflict and its financial market effects",
+          interp:
+            "War read through the lens of investor risk, energy prices, and institutional response — a systemic rather than human-scale frame.",
+        },
+        {
+          source: "Morning Brew",
+          tag: "markets",
+          tl: "Markets",
+          title: "Central bank signaling and inflation expectations",
+          interp:
+            "A lighter-format story that still connected monetary policy to broader economic consequences — consistent with my analytical tendency.",
+        },
+        {
+          source: "Financial Times",
+          tag: "blindspot",
+          tl: "Blind Spot",
+          title: "A local or community story I did not choose",
+          interp:
+            "This represents the absence in my data. Local, cultural, and community-centered stories were consistently skipped in favor of systemic global news.",
+        },
+        {
+          source: "New York Times",
+          tag: "blindspot",
+          tl: "Blind Spot",
+          title: "An everyday-life or cultural story not selected",
+          interp:
+            "My habit of choosing systems-level stories meant stories about culture, health, or community experience rarely made my submissions.",
+        },
+      ];
+
+      // ================================================================
+      //  TOOLTIP
+      // ================================================================
+      const tt = document.getElementById("tt");
+      function showTT(e, html) {
+        tt.innerHTML = html;
+        tt.classList.add("visible");
+        moveTT(e);
+      }
+      function moveTT(e) {
+        let x = e.clientX + 15,
+          y = e.clientY - 12;
+        if (x + 290 > window.innerWidth) x = e.clientX - 295;
+        tt.style.left = x + "px";
+        tt.style.top = y + "px";
+      }
+      function hideTT() {
+        tt.classList.remove("visible");
+      }
+
+      // ================================================================
+      //  FADE-IN OBSERVER
+      // ================================================================
+      const fObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".fade-in").forEach((el) => fObs.observe(el));
+
+      // ================================================================
+      //  COUNT-UP
+      // ================================================================
+      function countUp(el, target, isPct, dur = 1300) {
+        const start = performance.now();
+        (function step(now) {
+          const p = Math.min((now - start) / dur, 1),
+            v = (1 - Math.pow(1 - p, 3)) * target;
+          el.textContent = isPct
+            ? v.toFixed(1) + "%"
+            : Math.round(v).toLocaleString();
+          if (p < 1) requestAnimationFrame(step);
+        })(start);
+      }
+      let counted = false;
+      const heroObs = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && !counted) {
+            counted = true;
+            document
+              .querySelectorAll("[data-count]")
+              .forEach((el) => countUp(el, +el.dataset.count, false));
+            document
+              .querySelectorAll("[data-cpct]")
+              .forEach((el) => countUp(el, +el.dataset.cpct, true));
+          }
+        },
+        { threshold: 0.5 },
+      );
+      heroObs.observe(document.querySelector(".stat-cards"));
+
+      // ================================================================
+      //  FLOATING HEADLINES
+      // ================================================================
+      [
+        "FT: Markets weigh risk of prolonged conflict on energy supply chains",
+        "NYT: AI regulation debate intensifies in Washington and Brussels",
+        "FT: Central banks signal caution amid persistent inflation",
+        "NYT: Tech giants face antitrust scrutiny across three continents",
+        "FT: Semiconductor export controls reshape global supply chains",
+        "NPR: Local communities respond to shifting federal housing policy",
+        "Guardian: Climate pledges lag behind scientific recommendations",
+        "Bloomberg: Data center construction boom strains power grids",
+      ].forEach((h, i) => {
+        const el = document.createElement("div");
+        el.className = "fh";
+        el.textContent = h;
+        el.style.cssText = `top:${10 + i * 11}%;left:${i % 2 === 0 ? "-5%" : "55%"};animation-duration:${8 + i * 1.5}s;animation-delay:${i * 0.7}s`;
+        document.getElementById("floatHL").appendChild(el);
+      });
+
+      // ================================================================
+      //  DONUT
+      // ================================================================
+      (() => {
+        const svg = document.getElementById("donut-svg");
+        const cx = 140,
+          cy = 140,
+          R = 112,
+          r = 72;
+        let sa = -Math.PI / 2;
+        DONUT_DATA.forEach((d, i) => {
+          const angle = (d.pct / 100) * Math.PI * 2,
+            ea = sa + angle;
+          const [x1, y1] = [cx + R * Math.cos(sa), cy + R * Math.sin(sa)];
+          const [x2, y2] = [cx + R * Math.cos(ea), cy + R * Math.sin(ea)];
+          const [ix1, iy1] = [cx + r * Math.cos(ea), cy + r * Math.sin(ea)];
+          const [ix2, iy2] = [cx + r * Math.cos(sa), cy + r * Math.sin(sa)];
+          const la = angle > Math.PI ? 1 : 0;
+          const path = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "path",
+          );
+          path.setAttribute(
+            "d",
+            `M${x1},${y1} A${R},${R} 0 ${la},1 ${x2},${y2} L${ix1},${iy1} A${r},${r} 0 ${la},0 ${ix2},${iy2} Z`,
+          );
+          path.setAttribute("fill", d.color);
+          path.setAttribute("stroke", "#F0EBE1");
+          path.setAttribute("stroke-width", "2");
+          path.style.cssText =
+            "cursor:pointer;transition:transform .2s;transform-origin:140px 140px";
+          path.addEventListener("mouseenter", (e) => {
+            path.style.transform = "scale(1.05)";
+            showTT(
+              e,
+              `<strong>${d.label}</strong>${d.count} stories · ${d.pct}%<br><span style="opacity:.8;font-size:.75rem">${d.desc}</span>`,
+            );
+            highlightLeg(i);
+            updateDesc(d);
+          });
+          path.addEventListener("mousemove", moveTT);
+          path.addEventListener("mouseleave", () => {
+            path.style.transform = "";
+            hideTT();
+          });
+          path.addEventListener("click", () => {
+            updateDesc(d);
+            highlightLeg(i);
+          });
+          svg.appendChild(path);
+          sa = ea;
+        });
+        const leg = document.getElementById("donut-legend");
+        DONUT_DATA.forEach((d, i) => {
+          const el = document.createElement("div");
+          el.className = "d-leg";
+          el.dataset.i = i;
+          el.innerHTML = `<span class="d-dot" style="background:${d.color}"></span><div><div class="d-name">${d.label}</div><div class="d-pct">${d.count} stories · ${d.pct}%</div></div>`;
+          el.addEventListener("click", () => {
+            updateDesc(d);
+            highlightLeg(i);
+          });
+          leg.appendChild(el);
+        });
+        function highlightLeg(idx) {
+          document
+            .querySelectorAll(".d-leg")
+            .forEach((el, i) => el.classList.toggle("active", i === idx));
+        }
+        function updateDesc(d) {
+          const el = document.getElementById("donut-desc");
+          el.style.opacity = 0;
+          setTimeout(() => {
+            el.textContent = `${d.label} — ${d.count} stories · ${d.pct}%. ${d.desc}`;
+            el.style.opacity = 1;
+          }, 180);
+        }
+      })();
+
+      // ================================================================
+      //  SPECTRUM
+      // ================================================================
+      (() => {
+        const track = document.getElementById("spectrum-track");
+        [
+          { label: "Me", sub: "81.6% top-two", pct: 12, color: "var(--navy)" },
+          {
+            label: "Section",
+            sub: "37.0% top-two",
+            pct: 67,
+            color: "var(--rust)",
+          },
+        ].forEach((m) => {
+          const wrap = document.createElement("div");
+          wrap.className = "sp-marker";
+          wrap.style.left = m.pct + "%";
+          wrap.innerHTML = `<div class="sp-dot" style="background:${m.color}"></div><div class="sp-label"><span class="sp-label-main" style="color:${m.color}">${m.label}</span><br><span class="sp-label-sub">${m.sub}</span></div>`;
+          track.appendChild(wrap);
+        });
+      })();
+
+      // ================================================================
+      //  BAR CHARTS
+      // ================================================================
+      const barObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.querySelectorAll(".bar-fill").forEach((b) => {
+                setTimeout(() => {
+                  b.style.width = b.dataset.t + "%";
+                }, 200);
+              });
+              barObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      document.querySelectorAll(".chart-box").forEach((b) => barObs.observe(b));
+      const pubObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.querySelectorAll(".pbf").forEach((b) => {
+                setTimeout(() => {
+                  b.style.width = b.dataset.t + "%";
+                }, 300);
+              });
+              pubObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.2 },
+      );
+      document.querySelectorAll(".two-col").forEach((b) => pubObs.observe(b));
+      document.querySelectorAll(".bar-track").forEach((track) => {
+        track.addEventListener("mousemove", (e) => {
+          const parts = (track.dataset.tt || "").split("|");
+          if (parts.length < 2) return;
+          showTT(
+            e,
+            `<strong>${parts[0]}</strong>${parts.slice(1).join("<br>")}`,
+          );
+        });
+        track.addEventListener("mouseleave", hideTT);
+      });
+
+      // ================================================================
+      //  TIMELINE
+      // ================================================================
+      (() => {
+        const container = document.getElementById("tl-months");
+        const maxC = Math.max(...MONTH_DATA.map((d) => d.count));
+        MONTH_DATA.forEach((d, i) => {
+          const block = document.createElement("div");
+          block.className = "tl-block";
+          const h = Math.round((d.count / maxC) * 130);
+          block.innerHTML = `<div class="tl-month-name">${d.name}</div><div class="tl-outer" data-i="${i}"><div class="tl-fill" style="height:0" data-h="${h}"></div></div><div class="tl-count">${d.count}</div>`;
+          block.addEventListener("click", () => selectMonth(i, block));
+          container.appendChild(block);
+        });
+        const tlObs = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              document.querySelectorAll(".tl-fill").forEach((f, i) => {
+                setTimeout(() => {
+                  f.style.height = f.dataset.h + "px";
+                }, i * 90);
+              });
+              tlObs.disconnect();
+            }
+          },
+          { threshold: 0.25 },
+        );
+        tlObs.observe(container);
+        function selectMonth(idx, block) {
+          document
+            .querySelectorAll(".tl-outer")
+            .forEach((el) => el.classList.remove("active"));
+          document
+            .querySelectorAll(".tl-block")
+            .forEach((el) => el.classList.remove("active"));
+          block.querySelector(".tl-outer").classList.add("active");
+          block.classList.add("active");
+          const d = MONTH_DATA[idx];
+          document.getElementById("tp-mo").textContent = d.name + " 2026";
+          document.getElementById("tp-n").innerHTML =
+            `${d.count} <span>stories</span>`;
+          document.getElementById("tp-t").textContent = d.interp;
+        }
+      })();
+
+      // ================================================================
+      //  CONSTELLATION
+      // ================================================================
+      (() => {
+        const svg = document.getElementById("const-svg");
+        const ns = "http://www.w3.org/2000/svg";
+        const center = CONST_NODES.find((n) => n.type === "center");
+        CONST_NODES.filter((n) => n.type !== "center").forEach((n) => {
+          const line = document.createElementNS(ns, "line");
+          line.setAttribute("x1", center.x);
+          line.setAttribute("y1", center.y);
+          line.setAttribute("x2", n.x);
+          line.setAttribute("y2", n.y);
+          line.setAttribute(
+            "class",
+            "cn-line" + (n.type === "strong" ? " strong" : ""),
+          );
+          svg.appendChild(line);
+        });
+        CONST_NODES.forEach((n) => {
+          const g = document.createElementNS(ns, "g");
+          g.setAttribute("class", "cn node-" + n.id);
+          g.setAttribute("transform", `translate(${n.x},${n.y})`);
+          const circle = document.createElementNS(ns, "circle");
+          circle.setAttribute("cx", 0);
+          circle.setAttribute("cy", 0);
+          circle.setAttribute("r", n.r);
+          if (n.type === "center") {
+            circle.setAttribute("fill", "#1A2B4A");
+            circle.setAttribute("stroke", "none");
+          } else if (n.type === "strong") {
+            circle.setAttribute("fill", "#1A2B4A");
+            circle.setAttribute("fill-opacity", ".14");
+            circle.setAttribute("stroke", "#1A2B4A");
+            circle.setAttribute("stroke-width", "1.5");
+          } else if (n.type === "weak") {
+            circle.setAttribute("fill", "none");
+            circle.setAttribute("stroke", "#9B3F2B");
+            circle.setAttribute("stroke-width", "1.2");
+            circle.setAttribute("stroke-dasharray", "3,2");
+          } else {
+            circle.setAttribute("fill", "#1A2B4A");
+            circle.setAttribute("fill-opacity", ".07");
+            circle.setAttribute("stroke", "#1A2B4A");
+            circle.setAttribute("stroke-width", "1");
+          }
+          g.appendChild(circle);
+          const labelLines = n.label.split("\n");
+          if (n.type === "center") {
+            labelLines.forEach((line, li) => {
+              const t = document.createElementNS(ns, "text");
+              t.setAttribute("x", 0);
+              t.setAttribute("y", li * 14 - (labelLines.length - 1) * 7);
+              t.setAttribute("text-anchor", "middle");
+              t.setAttribute("dominant-baseline", "middle");
+              t.setAttribute("font-size", "11");
+              t.setAttribute("font-weight", "600");
+              t.setAttribute("fill", "#fff");
+              t.setAttribute("pointer-events", "none");
+              t.textContent = line;
+              g.appendChild(t);
+            });
+          } else {
+            labelLines.forEach((line, li) => {
+              const t = document.createElementNS(ns, "text");
+              t.setAttribute("x", 0);
+              t.setAttribute("y", n.r + 13 + li * 12);
+              t.setAttribute("text-anchor", "middle");
+              t.setAttribute("font-size", "10");
+              t.setAttribute("font-weight", "500");
+              t.setAttribute("fill", n.type === "weak" ? "#9B3F2B" : "#1A2B4A");
+              t.setAttribute("pointer-events", "none");
+              t.textContent = line;
+              g.appendChild(t);
+            });
+          }
+          g.addEventListener("click", () => selectNode(n.id));
+          g.addEventListener("mouseenter", () =>
+            circle.setAttribute(
+              "fill-opacity",
+              n.type === "center" ? "1" : ".3",
+            ),
+          );
+          g.addEventListener("mouseleave", () =>
+            circle.setAttribute(
+              "fill-opacity",
+              n.type === "center"
+                ? "1"
+                : { strong: ".14", mid: ".07", weak: "0" }[n.type] || ".14",
+            ),
+          );
+          svg.appendChild(g);
+        });
+        function selectNode(id) {
+          const r = CONST_TEXT[id] || {
+            title: id,
+            text: "This topic helped connect individual headlines to a larger social, political, or economic system.",
+            badge: "mid",
+          };
+          document.getElementById("cp-title").textContent = r.title;
+          document.getElementById("cp-text").textContent = r.text;
+          document.getElementById("cp-tag").textContent = "Topic Reflection";
+          const badge = document.getElementById("cp-badge");
+          badge.innerHTML = "";
+          if (r.badge === "strong")
+            badge.innerHTML =
+              '<span class="const-badge badge-strong">Strongly represented</span>';
+          else if (r.badge === "weak")
+            badge.innerHTML =
+              '<span class="const-badge badge-weak">Underrepresented</span>';
+          document
+            .querySelectorAll(".cn")
+            .forEach((g) => g.classList.remove("active"));
+          const a = document.querySelector(".node-" + id);
+          if (a) a.classList.add("active");
+        }
+      })();
+
+      // ================================================================
+      //  RADAR
+      // ================================================================
+      (() => {
+        const svg = document.getElementById("radar-svg");
+        const ns = "http://www.w3.org/2000/svg";
+        const cx = 190,
+          cy = 195,
+          maxR = 138,
+          n = RADAR_DATA.length,
+          levels = 5;
+        function polar(deg, val) {
+          const r = (val / 5) * maxR,
+            a = ((deg - 90) * Math.PI) / 180;
+          return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+        }
+        // grid
+        for (let l = 1; l <= levels; l++) {
+          const r = (l / levels) * maxR;
+          const pts = RADAR_DATA.map((_, i) => {
+            const [x, y] = polar((i / n) * 360, 5);
+            return `${cx + (x - cx) * (l / levels)},${cy + (y - cy) * (l / levels)}`;
+          }).join(" ");
+          const poly = document.createElementNS(ns, "polygon");
+          poly.setAttribute("points", pts);
+          poly.setAttribute("fill", "none");
+          poly.setAttribute("stroke", "#D8D3CB");
+          poly.setAttribute("stroke-width", ".8");
+          svg.appendChild(poly);
+        }
+        // axes
+        RADAR_DATA.forEach((_, i) => {
+          const [x, y] = polar((i / n) * 360, 5);
+          const line = document.createElementNS(ns, "line");
+          line.setAttribute("x1", cx);
+          line.setAttribute("y1", cy);
+          line.setAttribute("x2", x);
+          line.setAttribute("y2", y);
+          line.setAttribute("stroke", "#D8D3CB");
+          line.setAttribute("stroke-width", ".8");
+          svg.appendChild(line);
+        });
+        // data poly
+        const dataPoly = document.createElementNS(ns, "polygon");
+        dataPoly.setAttribute(
+          "points",
+          RADAR_DATA.map((_, i) => polar((i / n) * 360, 0).join(",")).join(" "),
+        );
+        dataPoly.setAttribute("fill", "rgba(26,43,74,.13)");
+        dataPoly.setAttribute("stroke", "#1A2B4A");
+        dataPoly.setAttribute("stroke-width", "1.5");
+        dataPoly.style.transition = "points 0s";
+        svg.appendChild(dataPoly);
+        // animate
+        let animated = false;
+        const rObs = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting && !animated) {
+              animated = true;
+              setTimeout(() => {
+                dataPoly.setAttribute(
+                  "points",
+                  RADAR_DATA.map((d, i) =>
+                    polar((i / n) * 360, d.score).join(","),
+                  ).join(" "),
+                );
+              }, 300);
+            }
+          },
+          { threshold: 0.3 },
+        );
+        rObs.observe(svg);
+        // labels + dots
+        RADAR_DATA.forEach((d, i) => {
+          const ang = (i / n) * 360;
+          const [lx, ly] = polar(ang, 5.9);
+          const g = document.createElementNS(ns, "g");
+          g.style.cursor = "pointer";
+          d.label.split("\n").forEach((line, li) => {
+            const t = document.createElementNS(ns, "text");
+            t.setAttribute("x", lx);
+            t.setAttribute(
+              "y",
+              ly + li * 13 - (d.label.split("\n").length - 1) * 6,
+            );
+            t.setAttribute("text-anchor", "middle");
+            t.setAttribute("dominant-baseline", "middle");
+            t.setAttribute("font-family", "'DM Sans',sans-serif");
+            t.setAttribute("font-size", "10.5");
+            t.setAttribute("font-weight", "500");
+            t.setAttribute("fill", d.score >= 4 ? "#1A2B4A" : "#9B3F2B");
+            t.textContent = line;
+            g.appendChild(t);
+          });
+          g.addEventListener("mouseenter", (e) => {
+            showTT(
+              e,
+              `<strong>${d.label.replace("\n", " ")}</strong>Score: ${d.score}/5<br><span style="opacity:.8;font-size:.75rem">${d.desc}</span>`,
+            );
+            updateRadarPanel(d);
+          });
+          g.addEventListener("mousemove", moveTT);
+          g.addEventListener("mouseleave", hideTT);
+          g.addEventListener("click", () => updateRadarPanel(d));
+          svg.appendChild(g);
+          // dot
+          const [dx, dy] = polar(ang, d.score);
+          const dot = document.createElementNS(ns, "circle");
+          dot.setAttribute("cx", dx);
+          dot.setAttribute("cy", dy);
+          dot.setAttribute("r", "4");
+          dot.setAttribute("fill", d.score >= 4 ? "#1A2B4A" : "#9B3F2B");
+          dot.setAttribute("stroke", "#F0EBE1");
+          dot.setAttribute("stroke-width", "1.5");
+          dot.style.cssText = "opacity:0;transition:opacity .5s";
+          setTimeout(() => {
+            dot.style.opacity = 1;
+          }, 700);
+          svg.appendChild(dot);
+        });
+        function updateRadarPanel(d) {
+          document.getElementById("rp-title").textContent = d.label.replace(
+            "\n",
+            " ",
+          );
+          document.getElementById("rp-score").innerHTML =
+            `${d.score}<span> / 5</span>`;
+          document.getElementById("rp-text").textContent = d.desc;
+        }
+      })();
+
+      // ================================================================
+      //  STORY CARDS
+      // ================================================================
+      (() => {
+        const filters = [
+          "All",
+          "AI",
+          "Markets",
+          "War",
+          "Trade",
+          "Geopolitics",
+          "Blind Spots",
+        ];
+        const frow = document.getElementById("filter-row");
+        const grid = document.getElementById("stories-grid");
+        filters.forEach((f) => {
+          const btn = document.createElement("button");
+          btn.className = "fbtn" + (f === "All" ? " fa" : "");
+          btn.textContent = f;
+          btn.addEventListener("click", () => {
+            document
+              .querySelectorAll(".fbtn")
+              .forEach((b) => b.classList.remove("fa", "fb"));
+            btn.classList.add(f === "Blind Spots" ? "fb" : "fa");
+            const map = {
+              All: null,
+              AI: "ai",
+              Markets: "markets",
+              War: "war",
+              Trade: "trade",
+              Geopolitics: "geopolitics",
+              "Blind Spots": "blindspot",
+            };
+            const tag = map[f];
+            document
+              .querySelectorAll(".sc")
+              .forEach((c) =>
+                c.classList.toggle("hidden", !(!tag || c.dataset.tag === tag)),
+              );
+          });
+          frow.appendChild(btn);
+        });
+        STORIES_DATA.forEach((s) => {
+          const c = document.createElement("div");
+          c.className = "sc";
+          c.dataset.tag = s.tag;
+          c.innerHTML = `<div class="sc-src">${s.source}</div><span class="sc-tag t-${s.tag}">${s.tl}</span><div class="sc-title">${s.title}</div><div class="sc-interp">${s.interp}</div>`;
+          grid.appendChild(c);
+        });
+      })();
+
+      // ================================================================
+      //  ESSAY SIDENAV
+      // ================================================================
+      const sideObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              document
+                .querySelectorAll(".enav-links a")
+                .forEach((a) =>
+                  a.classList.toggle(
+                    "active",
+                    a.getAttribute("href") === "#" + entry.target.id,
+                  ),
+                );
+            }
+          });
+        },
+        { rootMargin: "-20% 0px -60% 0px" },
+      );
+      document.querySelectorAll(".es").forEach((s) => sideObs.observe(s));
+    </script>
+  </body>
+</html>
